@@ -2,24 +2,75 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
+class Header extends Component {
+  render(){
+    return(
+      <div>
+        Header
+      </div>
+    );
+  }
+}
+
+class RightSideBar extends Component {
+  render(){
+    return(
+      <div>
+        My Actions
+      </div>
+    );
+  }
+}
+
+class LeftSideBar extends Component {
+  render(){
+    return(
+      <div>
+        What should go here?
+      </div>
+    );
+  }
+}
+
+class Dashboard extends Component {
+  render(){
+    return(
+      <div>
+        <h2>Dashboard</h2>
+        <div>
+          List of open Inc... 
+        </div>
+        <div>
+          Safe Days Report
+        </div>
+        <div>
+          Open Incidents Report
+        </div>
+      </div>
+    );
+  }
+}
+
+class Footer extends Component {
+  render(){
+    return(
+      <div>
+        Dinkin' Flicka' Engineering 2019, All Rights Reserved
+      </div>
+    );
+  }
+}
+
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <h1>Safety App!</h1>
+        <Header/>
+        <LeftSideBar/>
+        <Dashboard/>
+        <RightSideBar/>
+        <Footer/>
       </div>
     );
   }
