@@ -1,75 +1,60 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-
-class Header extends Component {
-  render(){
-    return(
-      <div>
-        Header
-      </div>
-    );
-  }
-}
-
-class RightSideBar extends Component {
-  render(){
-    return(
-      <div>
-        My Actions
-      </div>
-    );
-  }
-}
-
-class LeftSideBar extends Component {
-  render(){
-    return(
-      <div>
-        What should go here?
-      </div>
-    );
-  }
-}
-
-class Dashboard extends Component {
-  render(){
-    return(
-      <div>
-        <h2>Dashboard</h2>
-        <div>
-          List of open Inc... 
-        </div>
-        <div>
-          Safe Days Report
-        </div>
-        <div>
-          Open Incidents Report
-        </div>
-      </div>
-    );
-  }
-}
-
-class Footer extends Component {
-  render(){
-    return(
-      <div>
-        Dinkin' Flicka' Engineering 2019, All Rights Reserved
-      </div>
-    );
-  }
-}
+import './flatly.min.css';
+import React, { Component } from 'react';
+import NavBar from './NavBar'
+import LeftSideBar from './LeftSideBar'
+import Dashboard from './Dashboard'
+import Actions from './Actions'
+import NewIncident from './NewIncident'
+import Footer from './Footer'
+import { staticData } from './data/StaticData.js';
 
 class App extends Component {
+  constructor(props){
+    super(props); 
+    this.state = {staticData: {}}
+  }
+  
+  componentWillMount(){
+    this.setState({staticData: staticData});
+  }
+
   render() {
+    const incidents = this.state.staticData.incidents; 
+    const openActions = [];
+    this.state.staticData.incidents.map(inc => {
+      inc.actions.map(act => {
+        if(act.assignedTo === 'Bob Berthiaume' && !act.cd){
+          openActions.push(act); 
+        } 
+      })
+    })
+    
+    const sortedDaySinceLastReport = [...this.state.staticData.daySinceLastReport];
+    sortedDaySinceLastReport.sort((d1, d2) => {
+      return d1.daySinceTRR - d2.daySinceTRR;
+    });
+
+    const sortedOpenIncidentsReport = [...this.state.staticData.openIncidentByDeptReport];
+    sortedOpenIncidentsReport.sort((d1, d2) => {
+      return d2.openIncidents - d1.openIncidents;
+    });
+    
+    let showNewForm = true; 
+
     return (
       <div className="App">
-        <h1>Safety App!</h1>
-        <Header/>
-        <LeftSideBar/>
-        <Dashboard/>
-        <RightSideBar/>
+        <NavBar />
+        <div className="Main">
+          <LeftSideBar/>
+          ${ showNewForm ? <NewIncident /> : null }
+          <Dashboard 
+            incidents={incidents}
+            daySinceLastReport={sortedDaySinceLastReport}
+            openIncidentsReport={sortedOpenIncidentsReport}
+            />
+          <Actions actions={openActions}/>
+        </div>
         <Footer/>
       </div>
     );
