@@ -28,11 +28,11 @@ const userStyle = {
 }
 
 class NavBar extends Component {
-  constructor(props){
-    super(props);
-    
+  // constructor(props){
+  //   super(props);
 
-  }
+
+  // } 
 
   render(){
     return(
@@ -61,7 +61,7 @@ class NavBar extends Component {
           </div>
           <div>
             <a href="#">Log Out</a>
-            <i style={{paddingLeft: '10px', paddingRight: '10px'}} class="fas fa-sign-out-alt"></i>
+            <i style={{paddingLeft: '10px', paddingRight: '10px'}} className="fas fa-sign-out-alt"></i>
           </div>
         </div>
       </div>

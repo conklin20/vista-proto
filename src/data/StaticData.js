@@ -85,19 +85,19 @@ function popIncidents(){
         actions: [
           {
             actionDesc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 
-            assignedTo: staticData.names[Math.floor(Math.random() * (staticData.names.length / 5))], 
+            assignedTo: staticData.names[Math.floor(Math.random() * (staticData.names.length / 3))], 
             ecd: filteredDates[Math.floor(Math.random() * filteredDates.length)], 
             cd: filteredDates[Math.floor(Math.random() * filteredDates.length)] 
           }, 
           {
             actionDesc: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 
-            assignedTo: staticData.names[Math.floor(Math.random() * (staticData.names.length / 5))], 
+            assignedTo: staticData.names[Math.floor(Math.random() * (staticData.names.length / 3))], 
             ecd: filteredDates[Math.floor(Math.random() * filteredDates.length)], 
             cd: null 
           }, 
           {
             actionDesc: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco', 
-            assignedTo: staticData.names[Math.floor(Math.random() * (staticData.names.length / 5))], 
+            assignedTo: staticData.names[Math.floor(Math.random() * (staticData.names.length / 3))], 
             ecd: filteredDates[Math.floor(Math.random() * filteredDates.length)], 
             cd: null 
           }

@@ -54,6 +54,10 @@ class IncidentList extends Component {
 }
 
 class Incident extends Component {
+  constructor(props){
+    super(props)
+    
+  }
   render(){
     const {number, description, type, dateOccured, valueStream, department, ee} = this.props; 
     return(
@@ -65,10 +69,10 @@ class Incident extends Component {
         <td>{ee}</td>
         <td>{description.length > 75 ? description.substring(0, 75).concat('...') : description }</td>
         <td>
-          <button type="button" class="btn btn-outline-primary btn-sm">View Detail</button>
+          <button type="button" className="btn btn-outline-primary btn-sm" >View Detail</button>
         </td>
         <td>
-          <button type="button" class="btn btn-outline-primary btn-sm">Review Actions</button>
+          <button type="button" className="btn btn-outline-primary btn-sm" >Review Actions</button>
         </td>
       </tr>   
     );

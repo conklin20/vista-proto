@@ -8,7 +8,7 @@ const defaultStyle = {
   alignItems: 'center',
   borderLeft: '2px solid black',
   backgroundColor: '#95a5a6',
-  paddingTop: '5px', 
+  paddingTop: '20px', 
 }
 
 class Actions extends Component {
@@ -19,7 +19,7 @@ class Actions extends Component {
     const actions = this.props.actions.map((action, index) => (    
       // <li style={{order: '3123' }}>
       <li key={index}
-          
+          className="list-group-item d-flex justify-content-between align-items-center" 
       >
         {action.ecd} - 
         {action.actionDesc.length > 20 ? action.actionDesc.substring(0, 20).concat('...') : action.actionDesc }
@@ -29,7 +29,7 @@ class Actions extends Component {
     return (
       <div style={defaultStyle}>
         <h4>My Open Actions</h4>
-        <ul style={{display:'flex', flexDirection:'column'}}>
+        <ul id="actions" className="list-group">
           {actions}
         </ul>
       </div>

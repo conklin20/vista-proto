@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
-import IncidentList from './IncidentList'
-
-// const defaultStyle = {
-//   // flex: '4 0 60%',
-//   display: 'flex',
-//   flexDirection: 'column',
-//   flex: '1',
-//   alignItems: 'center',
-//   backgroundColor: '#fff'
-// }
+import IncidentList from './IncidentList'; 
+import IncidentBreakdown from './svg/IncidentBreakdown'; 
 
 const tableStyle = {
   fontSize: '.8em'
@@ -37,8 +29,8 @@ const dashboardBottom = {
 
 class SafeDays extends Component {
   render(){
-    const daysSinceLastReport = this.props.daySinceLastReport.map(row => (
-      <tr>
+    const daysSinceLastReport = this.props.daySinceLastReport.map((row, idx) => (
+      <tr key={idx}>
         <td>{row.valueStream}</td>
         <td>{row.departmentNo}</td>
         <td>{row.department}</td>
@@ -71,8 +63,8 @@ class SafeDays extends Component {
 
 class OpenIncidentsByDept extends Component {
   render(){
-    const OpenIncidentsByDeptReport = this.props.openIncidentsReport.map(row => (
-      <tr>
+    const OpenIncidentsByDeptReport = this.props.openIncidentsReport.map((row, idx) => (
+      <tr key={idx}>
         <td>{row.valueStream}</td>
         <td>{row.departmentNo}</td>
         <td>{row.department}</td>
@@ -105,14 +97,23 @@ class OpenIncidentsByDept extends Component {
 
 class Dashboard extends Component {
   render(){
+
+    const fakeData = {
+      data: [12, 5, 6, 6, 9, 10],
+      width: 600,
+      height: 300,
+      id: 'incidentBreakdown'
+    }
+
     return(
       <div style={dashboardStyle}>
-        <h3 style={{marginTop: '5px'}}>Dashboard</h3>
+        <h3 style={{marginTop: '25px'}}>Dashboard</h3>
         <div style={dashboardTop}>
           <IncidentList incidents={this.props.incidents}/>
         </div>
-        <div style={dashboardBottom}>
+        <div id="dashboardBottom" style={dashboardBottom}>
           <SafeDays daySinceLastReport={this.props.daySinceLastReport} />
+          <IncidentBreakdown data={fakeData.data} width={fakeData.width} height={fakeData.height} />
           <OpenIncidentsByDept openIncidentsReport={this.props.openIncidentsReport} />
         </div>
       </div>
