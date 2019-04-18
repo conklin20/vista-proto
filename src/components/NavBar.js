@@ -28,13 +28,19 @@ const userStyle = {
 }
 
 class NavBar extends Component {
-  // constructor(props){
-  //   super(props);
+  static defaultProps = {
+    onNewIncident() {}
+  }
+  
 
+  constructor(props){
+    super(props);
 
-  // } 
+  } 
 
   render(){
+    // const {showIncidentForm} = this.props; 
+
     return(
       <div style={defaultStyle}>
         <img {...logo} />
@@ -42,14 +48,13 @@ class NavBar extends Component {
           <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
-
           <div className="collapse navbar-collapse" id="navbarColor01">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
                 <a className="nav-link" href="#">Dashboard <span className="sr-only">(current)</span></a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Report Incident</a>
+                <a className="nav-link" href="#" onClick={this.props.onNewIncident} >Report Incident</a>
               </li>    
             </ul>
           </div>

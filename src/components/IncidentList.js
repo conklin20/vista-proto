@@ -7,16 +7,30 @@ const tableStyle = {
 class IncidentList extends Component {
   constructor(props){
     super(props); 
-    this.state = {searchInput: ''}
+    this.state = {
+      searchInput: '', 
+      showIncidentModalAndPop: false, 
+      showActionModalAndPop: false
+    }
   }
   
   render() {
-    const filteredIncidents = this.state.searchInput ? 
-      this.props.incidents.filter(inc => JSON.stringify(inc).toLowerCase().includes(this.state.searchInput.toLowerCase())) 
+    const filterConditions = this.state.searchInput.toLowerCase().split(' ');
+
+    const filteredIncidents = filterConditions[0] !== '' ? 
+      this.props.incidents
+          .filter(inc => 
+            filterConditions.every(cond => 
+              JSON.stringify(inc)
+                .toLowerCase()
+                .includes(cond)
+            )
+          )
       : this.props.incidents 
     
     const incidents = filteredIncidents.map((inc, index) => (
-      <Incident key={index} {...inc} />
+      // <Incident key={index} {...inc} />
+      <Incident key={index} inc={inc} />
     ));
 
     return (
@@ -25,7 +39,7 @@ class IncidentList extends Component {
           <input 
             style={{width: '60%', marginLeft: '20%'}} 
             type="text" className="form-control" 
-            placeholder="Search for Incidents (ex. '4204' or 'Bob B' or 'TRR')" 
+            placeholder="Search for Incidents (ex. '4304' or 'TRR' or multiple conditions such as '4304 Bob')" 
             id="searchInput"
             name="searchInput"
             onChange={(e) => this.setState({[e.target.name]: e.target.value})}
@@ -54,25 +68,26 @@ class IncidentList extends Component {
 }
 
 class Incident extends Component {
-  constructor(props){
-    super(props)
-    
+  static defaultProps = {
+    onShowIncident() {}, 
+    onShowActions() {}
   }
+  
   render(){
-    const {number, description, type, dateOccured, valueStream, department, ee} = this.props; 
+    const {inc} = this.props; 
     return(
       <tr>
-        <td>{number}</td>
-        <td>{type}</td>
-        <td>{dateOccured}</td>
-        <td>{`${valueStream.abbr} - ${department.number}`}</td>
-        <td>{ee}</td>
-        <td>{description.length > 75 ? description.substring(0, 75).concat('...') : description }</td>
+        <td>{inc.number}</td>
+        <td>{inc.type}</td>
+        <td>{inc.dateOccured}</td>
+        <td>{`${inc.valueStream.abbr} - ${inc.department.number}`}</td>
+        <td>{inc.ee}</td>
+        <td>{inc.description.length > 75 ? inc.description.substring(0, 75).concat('...') : inc.description }</td>
         <td>
-          <button type="button" className="btn btn-outline-primary btn-sm" >View Detail</button>
+          <button type="button" className="btn btn-outline-primary btn-sm" onClick={this.props.onShowIncident} >View</button>
         </td>
         <td>
-          <button type="button" className="btn btn-outline-primary btn-sm" >Review Actions</button>
+          <button type="button" className="btn btn-outline-primary btn-sm" onClick={this.props.onShowActions} >Review</button>
         </td>
       </tr>   
     );

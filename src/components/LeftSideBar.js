@@ -4,7 +4,7 @@ const defaultStyle = {
   display: 'flex',
   // flex: '1 1 20%',
   /* 12em is the width of the columns */
-  flex: '0 0 12em',
+  flex: '.1 0 12em',
   borderRight: '2px solid black',
   backgroundColor: '#95a5a6',
   // color: '#fff'
@@ -19,5 +19,7 @@ class LeftSideBar extends Component {
     );
   }
 }
+
+
 
 export default LeftSideBar;

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import IncidentList from './IncidentList'; 
-import IncidentBreakdown from './svg/IncidentBreakdown'; 
+// import IncidentBreakdown from '../svg/IncidentBreakdown'; 
 
 const tableStyle = {
   fontSize: '.8em'
@@ -26,10 +26,14 @@ const dashboardBottom = {
   marginTop: '2%',
 }
 
-
 class SafeDays extends Component {
-  render(){
-    const daysSinceLastReport = this.props.daySinceLastReport.map((row, idx) => (
+  render(){          
+    const sortedDaySinceLastReport = [...this.props.daySinceLastReport];
+    sortedDaySinceLastReport.sort((d1, d2) => {
+      return d1.daySinceTRR - d2.daySinceTRR;
+    });
+
+    const daysSinceLastReport = sortedDaySinceLastReport.map((row, idx) => (
       <tr key={idx}>
         <td>{row.valueStream}</td>
         <td>{row.departmentNo}</td>
@@ -63,7 +67,13 @@ class SafeDays extends Component {
 
 class OpenIncidentsByDept extends Component {
   render(){
-    const OpenIncidentsByDeptReport = this.props.openIncidentsReport.map((row, idx) => (
+
+    const sortedOpenIncidentsReport = [...this.props.openIncidentsReport];
+    sortedOpenIncidentsReport.sort((d1, d2) => {
+      return d2.openIncidents - d1.openIncidents;
+    });
+
+    const OpenIncidentsByDeptReport = sortedOpenIncidentsReport.map((row, idx) => (
       <tr key={idx}>
         <td>{row.valueStream}</td>
         <td>{row.departmentNo}</td>
@@ -96,30 +106,24 @@ class OpenIncidentsByDept extends Component {
 }
 
 class Dashboard extends Component {
+
   render(){
-
-    const fakeData = {
-      data: [12, 5, 6, 6, 9, 10],
-      width: 600,
-      height: 300,
-      id: 'incidentBreakdown'
-    }
-
     return(
       <div style={dashboardStyle}>
         <h3 style={{marginTop: '25px'}}>Dashboard</h3>
         <div style={dashboardTop}>
-          <IncidentList incidents={this.props.incidents}/>
+          <IncidentList 
+            incidents={this.props.incidents}
+          />
         </div>
         <div id="dashboardBottom" style={dashboardBottom}>
           <SafeDays daySinceLastReport={this.props.daySinceLastReport} />
-          <IncidentBreakdown data={fakeData.data} width={fakeData.width} height={fakeData.height} />
+          {/* <IncidentBreakdown data={fakeData.data} width={fakeData.width} height={fakeData.height} /> */}
           <OpenIncidentsByDept openIncidentsReport={this.props.openIncidentsReport} />
         </div>
       </div>
     );
   }
 }
-
 
 export default Dashboard;
