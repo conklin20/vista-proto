@@ -37,10 +37,9 @@ class Actions extends Component {
       let date2 = new Date(d2.action.ecd);
       return date1 - date2;
     })
-
+    
     const actions = sortedActions.map((action, index) => (         
-      <Action 
-        key={action.number}
+      <Action key={action.action.number}
         action={action.action}
         incidentRef={action.incidentRef}
         viewAction={this.props.viewAction.bind(this, action)}        

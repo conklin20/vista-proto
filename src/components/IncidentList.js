@@ -75,6 +75,7 @@ class Incident extends Component {
   
   render(){
     const {inc} = this.props; 
+    
     return(
       <tr>
         <td>{inc.number}</td>

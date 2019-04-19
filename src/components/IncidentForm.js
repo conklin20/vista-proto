@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/incidentForm.css'
+import { DateTime } from 'luxon';
+import { convertToShortDate } from '../helpers/dateHelpers';
 
 class IncidentForm extends Component {  
   // static defaultProps = {
@@ -11,9 +13,7 @@ class IncidentForm extends Component {
   }
   
   render(){
-    const curDate = new Date();
-    const curTime = curDate.toTimeString(); 
-    
+    const today = convertToShortDate(DateTime.local());
 
     const {onClose} = this.props; 
     
@@ -53,7 +53,7 @@ class IncidentForm extends Component {
                 <div className="form-group formRow">
                   <div className="col-sm-6">
                     <label htmlFor="reportingDate">Date Reporting</label>
-                    <input type="date" className="form-control" id="reportingDate" defaultValue={curDate} aria-describedby="reportingDateHelp" />
+                    <input type="date" className="form-control" id="reportingDate" defaultValue={today} aria-describedby="reportingDateHelp" />
                   </div>
                   <div className="col-sm-6">
                     <label htmlFor="reportingTime">Time Reporting</label>
@@ -68,7 +68,7 @@ class IncidentForm extends Component {
                 <div className="form-group formRow">
                   <div className="col-sm-6">
                     <label htmlFor="incidentDate">Date of Incident</label>
-                    <input type="date" className="form-control" id="incidentDate" defaultValue={curDate} aria-describedby="incidentDateHelp" />
+                    <input type="date" className="form-control" id="incidentDate" defaultValue={today} aria-describedby="incidentDateHelp" />
                   </div>
                   <div className="col-sm-6">
                     <label htmlFor="incidentTime">Time of Incident</label>

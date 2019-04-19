@@ -16,7 +16,7 @@ import Drafts from './Drafts';
 
 class App extends Component {
   constructor(props){
-    super(props); 
+    super(props);
     this.state =  {
       staticData: {}, 
       showIncidentModal: false, 
@@ -25,7 +25,7 @@ class App extends Component {
       action: {}
     };
     
-    this.viewAction = this.viewAction.bind(this); 
+    this.viewAction = this.viewAction.bind(this);
   }
 
   viewAction(action){

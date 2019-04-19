@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import '../styles/actionForm.css'
+import { DateTime } from 'luxon';
+import { convertToShortDate } from '../helpers/dateHelpers';
 
 class ActionForm extends Component {
   static defaultProps = {
@@ -11,14 +13,13 @@ class ActionForm extends Component {
   }
     
   render(){
-    const curDate = new Date();
-    const curTime = curDate.toTimeString(); 
+    const today = convertToShortDate(DateTime.local());
     const lookupData = this.props.lookupData; 
     const action = this.props.action.action; 
     const incidentRef = this.props.action.incidentRef;
+    const {onClose} = this.props; 
 
     console.log(action); 
-    const {onClose} = this.props; 
     
     return(
       <div role="document">
@@ -66,9 +67,7 @@ class ActionForm extends Component {
                 <div className="form-group formRow">
                   <div className="col-sm-12">
                     <label htmlFor="actionDesc">Action Description</label>
-                    <textarea className="form-control" id="actionDesc" rows="4">
-                      {action.actionDesc}
-                    </textarea>
+                    <textarea className="form-control" id="actionDesc" rows="4" defaultValue={action.actionDesc} />
                   </div>
                 </div>
               </fieldset>
