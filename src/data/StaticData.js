@@ -197,7 +197,7 @@ function popEmployees(){
     staticData.lookupData.employees.push({
       name: name, 
       id: Math.floor(Math.random() * (99999 - 30000) + 30000), 
-      manager: managers[Math.floor(Math.random() * managers.length)]
+      manager: name === 'Bob Berthiaume' ? 'Bill Mackleit' : managers[Math.floor(Math.random() * managers.length)]
     })
   });
 }
