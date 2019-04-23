@@ -78,6 +78,7 @@ class IncidentForm extends Component {
     const incidentDate = isDraft ? draft.dateOccurred : convertToShortDate(DateTime.local())
     const lookupData = this.props.lookupData;
     const onClose = this.props.onClose;
+    const actions = draft.actions; 
 
     const jobs = lookupData.jobs.map((job, index) => (
       <option key={index}>{job}</option>
@@ -237,7 +238,11 @@ class IncidentForm extends Component {
               <hr/>
               {/* Section 3 */}
               <fieldset id="section3">
-                <h4>Section 3...</h4>
+                <h4>Actions</h4>                
+                {/* <Actions 
+                  openIncidents={openIncidents}
+                  viewAction={viewAction}
+                /> */}
               </fieldset>
               <hr/>     
               {/* Section 4 */}

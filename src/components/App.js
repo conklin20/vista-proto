@@ -30,6 +30,16 @@ class App extends Component {
     this.viewDraft = this.viewDraft.bind(this);
     this.handleSave = this.handleSave.bind(this); 
     this.handleSubmit = this.handleSubmit.bind(this); 
+    this.onShowIncident = this.onShowIncident.bind(this); 
+    this.onShowActions = this.onShowActions.bind(this);
+  }
+
+  onShowIncident(incident){
+    console.log(incident);
+  }
+
+  onShowActions(actions){
+    console.log(actions); 
   }
 
   viewAction(action){
@@ -146,6 +156,8 @@ class App extends Component {
 
           <Dashboard 
             incidents={openIncidents}
+            onShowIncident={this.onShowIncident}
+            onShowActions={this.onShowActions}
             />
 
           {/* <Actions 
