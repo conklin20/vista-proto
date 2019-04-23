@@ -1,5 +1,7 @@
 import { DateTime } from 'luxon';
 import { convertToShortDate } from '../helpers/dateHelpers';
+import { whatHappeneds } from './Incidents.js'
+import { actions } from './Actions.js'
 
 export const staticData = {
   lookupData: {
@@ -7,46 +9,87 @@ export const staticData = {
       {
         name: 'Centerfire',
         abbr: 'CF', 
+        backgroundColor: '#001f3f',
         departments: [
           {
-            number: 4304,
-            name: 'Centerfire Assembly'
+            number: 4262,
+            name: 'Plating',
+            abbr: 'PLAT',
+            backgroundColor: '#0074D9',
           },
           {
             number: 4303,
-            name: 'Centerfire Metal Parts'
+            name: 'Assembly',
+            abbr: 'CFAA',
+            backgroundColor: '#7FDBFF',
           },
           {
-            number: 4301,
-            name: 'Blazer Metal Parts'
+            number: 4212,
+            name: 'Bullet Manufacturing',
+            abbr: 'BMFG',
+            backgroundColor: '#39CCCC',
+          },
+          {
+            number: 4213,
+            name: 'Bullet Packaging',
+            abbr: 'BPKG',
+            backgroundColor: '#3D9970',
           }
         ]
       },
       {
         name: 'Rimfire',
         abbr: 'RF', 
+        backgroundColor: '#2ECC40',
         departments: [
           {
-            number: 4204,
-            name: 'Rimfire Assembly'
+            number: 4231,
+            name: 'Rimfire Metal Parts',
+            abbr: 'RFMP',
+            backgroundColor: '#01FF70',
           },
           {
-            number: 4203,
-            name: 'Rimfire Metal Parts'
+            number: 4433,
+            name: 'Rimfire Priming',
+            abbr: 'RFPR',
+            backgroundColor: '#FFDC00',
+          },
+          {
+            number: 4234,
+            name: 'Rimfire Assembly',
+            abbr: 'RFAA',
+            backgroundColor: '#FF851B',
           }
         ]
       }, 
       {
         name: 'Primers',
         abbr: 'PR', 
+        backgroundColor: '#FF4136',
         departments: [
           {
-            number: 4304,
-            name: 'Primer Assembly'
+            number: 4438,
+            name: 'Tracer',
+            abbr: 'TRCR',
+            backgroundColor: '#85144b',
           },
           {
-            number: 4231,
-            name: 'Primer Metal Parts'
+            number: 4439,
+            name: 'Chemistry',
+            abbr: 'CHEM',
+            backgroundColor: '#F012BE',
+          },
+          {
+            number: 4441,
+            name: 'Primer Metal Parts',
+            abbr: 'PMP',
+            backgroundColor: '#B10DC9',
+          },
+          {
+            number: 4442,
+            name: 'Primer Assembly',
+            abbr: 'PA',
+            backgroundColor: '#967bb6',
           }
         ]
       }
@@ -57,7 +100,9 @@ export const staticData = {
       'Rebecca Ward','Jack Scott','Justin Taylor','Timothy Moore','Amanda Nelson','Michelle Collins','Nancy Parker','Judith Brown','Lisa Butler','Ruth Rogers','Annie Walker','Jose Gray','Norma Coleman','Gary Perez',
       'Andrea Bell','Virginia Sanchez','Ronald Phillips','Harold Hernandez','Eugene Gonzales','Louise Rodriguez','Gerald Griffin','Carl James','Kathy Wood','Marie Smith','Matthew Howard',
       ], 
-    incidentTypes: ['TRR','Near Miss','First Aid']
+    incidentTypes: [`DART `,`TRR`,`First Aid  `,`Initiation / Fire`,`Unusual Event`, `Near Miss`,`Prop. Damage`,`TSCA`,`Forklift Incident`, `Chemical Release`],
+    employees: [],
+    jobs: [`Administration`, `Assembler II`,    `Assembler III`,    `Ballistics Tech`,    `Charger`,    `Chemical Worker`,    `CI Rotational Employee`,    `Clean Up Worker`,    `CMV Operator`,    `Copper Plater`,    `Electrician`,    `Eng. Tech`,    `Engineer`,    `Env. Dept. Operator`,    `Gold Dot Insp.`,    `HVAC Mechanic`,    `Inspector`,    `Janitor`,    `Lab Technician`,    `Machine Operator`,    `Machine Tool Operator`,    `Machinist`,`Materials Handler`, `Millwright`,   `Nickel Plater`,    `Packager`,    `Pipe Fitter`,    `Security Guard`,    `Set Up Asst.`,    `Set Up Worker`,    `Supervisor`,    `Tech Coordinator`,    `Temp Assembler II`,    `Temp Assembler III`,    `Temp Packager`,    `Waste Treatment Operator`]
   },
   incidents: [], 
   daySinceLastReport: [], 
@@ -70,42 +115,46 @@ function popIncidents(){
   for(let i=1; i<=numIncident;i++){
     let incNumber = Math.floor(100000 + Math.random() * 900000)
     let ranVS = Math.floor(Math.random() * lookupData.valueStreams.length)
-    let ranDateOccured = getRandomDate(); 
-    // let filteredDates = lookupData.dates.filter(date => date > lookupData.dates[ranDateOccured])
+    let ranDateOccurred = getRandomDate(); 
+    // let filteredDates = lookupData.dates.filter(date => date > lookupData.dates[ranDateOccurred])
+    let ee = lookupData.employees[Math.floor(Math.random() * lookupData.employees.length)];
     staticData.incidents.push(
       {
         number: incNumber, 
         status: incNumber > 980000 ? 'Draft' : 'Submitted', 
-        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.', 
+        description: whatHappeneds[Math.floor(Math.random() * whatHappeneds.length)], 
         type: lookupData.incidentTypes[Math.floor(Math.random() * lookupData.incidentTypes.length)],
-        dateOccured: ranDateOccured,
+        dateOccurred: ranDateOccurred,
         valueStream: {
           name: lookupData.valueStreams[ranVS].name,
           abbr: lookupData.valueStreams[ranVS].abbr
         },
         department: lookupData.valueStreams[ranVS].departments[Math.floor(Math.random() * lookupData.valueStreams[ranVS].departments.length)],
-        ee: lookupData.names[Math.floor(Math.random() * lookupData.names.length)],
+        ee: {...ee},
         actions: [
           {
             number: Math.floor(1000 + Math.random() * 9000),
-            actionDesc: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit', 
-            assignedTo: lookupData.names[Math.floor(Math.random() * (lookupData.names.length / 3))], 
+            actionDesc: actions[Math.floor(Math.random() * actions.length)], 
+            assignedTo: {...lookupData.employees[Math.floor(Math.random() * lookupData.employees.length)]}, 
             ecd: getRandomDate(), 
-            cd: getRandomDate()
+            cd: getRandomDate(-90, 0),
+            approved: true
           }, 
           {
             number: Math.floor(1000 + Math.random() * 9000),
-            actionDesc: 'Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 
-            assignedTo: lookupData.names[Math.floor(Math.random() * (lookupData.names.length / 3))], 
+            actionDesc: actions[Math.floor(Math.random() * actions.length)], 
+            assignedTo: {...lookupData.employees[Math.floor(Math.random() * lookupData.employees.length)]}, 
             ecd: getRandomDate(), 
-            cd: null 
+            cd: getRandomDate(-15, 0),
+            approved: false
           }, 
           {
             number: Math.floor(1000 + Math.random() * 9000),
-            actionDesc: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco', 
-            assignedTo: lookupData.names[Math.floor(Math.random() * (lookupData.names.length / 3))],
+            actionDesc: actions[Math.floor(Math.random() * actions.length)], 
+            assignedTo: {...lookupData.employees[Math.floor(Math.random() * lookupData.employees.length)]},
             ecd: getRandomDate(), 
-            cd: null 
+            cd: null, 
+            approved: false
           }
         ]
       }
@@ -120,8 +169,8 @@ function popDaysSinceReport(){
       staticData.daySinceLastReport.push({
         valueStream: vs.name, 
         departmentNo: d.number, 
-        department: d.name, 
-        daySinceTRR: Math.floor(Math.random() * 500)
+        department: d.abbr, 
+        daySinceTRR: Math.floor(Math.random() * 365)
       })
     })
   })
@@ -134,21 +183,34 @@ function popOpenIncidentsReport(){
       staticData.openIncidentByDeptReport.push({
         valueStream: vs.name, 
         departmentNo: d.number, 
-        department: d.name, 
-        openIncidents: Math.floor(Math.random() * 10)
+        department: d.abbr, 
+        openIncidents: Math.floor(Math.random() * 15)
       })
     })
   })
 }
 
-function getRandomDate(){
+function popEmployees(){
+  const lookupData = staticData.lookupData; 
+  const managers = lookupData.names.slice(0,5); 
+  lookupData.names.forEach(name => {
+    staticData.lookupData.employees.push({
+      name: name, 
+      id: Math.floor(Math.random() * (99999 - 30000) + 30000), 
+      manager: managers[Math.floor(Math.random() * managers.length)]
+    })
+  });
+}
+
+function getRandomDate(min = -90, max = 90){
   let now = DateTime.local(); 
-  let addDays = Math.random() * (90 - -90) + -90;
+  let addDays = Math.floor(Math.random() * (max - min) + min);
   now = now.plus({days: addDays})
   now = convertToShortDate(now); 
   return now;
 }
 
+popEmployees(); 
 popIncidents();
 popDaysSinceReport(); 
 popOpenIncidentsReport(); 

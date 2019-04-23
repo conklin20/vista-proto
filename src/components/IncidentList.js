@@ -12,6 +12,8 @@ class IncidentList extends Component {
       showIncidentModalAndPop: false, 
       showActionModalAndPop: false
     }
+
+    // this.onShowIncident = this.onShowIncident.bind(this); 
   }
   
   render() {
@@ -75,14 +77,13 @@ class Incident extends Component {
   
   render(){
     const {inc} = this.props; 
-    
     return(
       <tr>
         <td>{inc.number}</td>
         <td>{inc.type}</td>
         <td>{inc.dateOccured}</td>
         <td>{`${inc.valueStream.abbr} - ${inc.department.number}`}</td>
-        <td>{inc.ee}</td>
+        <td>{inc.ee.name}</td>
         <td>{inc.description.length > 75 ? inc.description.substring(0, 75).concat('...') : inc.description }</td>
         <td>
           <button type="button" className="btn btn-outline-primary btn-sm" onClick={this.props.onShowIncident} >View</button>

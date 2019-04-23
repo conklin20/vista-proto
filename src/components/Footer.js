@@ -5,14 +5,15 @@ let defaultStyle = {
   flexBasis: '50px', /* since header and footer are in a column, we can use flex basis to set the height */
   borderTop: '2px solid black',
   color: '#fff', 
-  justifyContent: 'center'
+  justifyContent: 'center',
+  alignItems: 'center'
 }
 
 class Footer extends Component {
   render(){
     return(
       <div style={defaultStyle}>
-        Some Cool Business Name 2019, All Rights Reserved
+        Copyright © 2019 Some Business Name
       </div>
     );
   }

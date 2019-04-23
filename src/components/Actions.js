@@ -3,13 +3,9 @@ import moment  from 'moment';
 import '../styles/actions.css'
 
 const defaultStyle = {
-  display: 'flex',
-  flexDirection: 'column', 
-  flex: '.1 0 12em',
-  alignItems: 'center',
-  borderLeft: '2px solid black',
-  backgroundColor: '#95a5a6',
-  paddingTop: '20px', 
+  paddingTop: '10px', 
+  textAlign: 'center',
+  margin: '0'
 }
 
 class Actions extends Component {
@@ -23,7 +19,7 @@ class Actions extends Component {
     const openActions = [];
     this.props.openIncidents.forEach(inc => {
       inc.actions.forEach(act => {
-        if(act.assignedTo === 'Bob Berthiaume' && !act.cd){
+        if(act.assignedTo.name === 'Bob Berthiaume' && !act.cd){
           openActions.push({
             incidentRef: inc.number,
             action: act
@@ -38,17 +34,20 @@ class Actions extends Component {
       return date1 - date2;
     })
     
-    const actions = sortedActions.map((action, index) => (         
+    const actions = 
+    sortedActions.length === 0 ? 
+    <h6>You have no open actions</h6> 
+      : sortedActions.map((action, index) => (         
       <Action key={action.action.number}
         action={action.action}
         incidentRef={action.incidentRef}
         viewAction={this.props.viewAction.bind(this, action)}        
       />
     ))
-
+    
     return (
       <div style={defaultStyle}>
-        <h4>My Open Actions</h4>
+        <h5>My Open Actions</h5>
         <ul id="actions" className="action-list">
           {actions}
         </ul>
@@ -68,9 +67,9 @@ const dueThisWeek = {
 }
 
 const Action = ({action, index, viewAction}) => (
-  <li key={index} className="action">
+  <li key={index} className="action" onClick={viewAction}>
     <div>
-      <div>
+      <div className="li-date">
         {moment().diff(action.ecd, 'days') >= 0 ? 
           <i style={pastDue} className="fas fa-exclamation-circle"></i> 
           : moment().diff(action.ecd, 'days') >-7 ?
@@ -82,7 +81,7 @@ const Action = ({action, index, viewAction}) => (
       {action.actionDesc.length > 27 ? action.actionDesc.substring(0, 27).concat('...') : action.actionDesc }      
     </div>
     <div>
-      <span onClick={viewAction}><i className="far fa-eye"></i></span>
+      <span className="view-action"><i className="far fa-eye"></i></span>
     </div>
   </li>
 )

@@ -12,6 +12,7 @@ import Footer from './Footer'
 import { staticData } from '../data/StaticData.js';
 import Modal from './Modal'
 import Drafts from './Drafts';
+import RightSideBar from './RightSideBar';
 
 
 class App extends Component {
@@ -26,6 +27,9 @@ class App extends Component {
     };
     
     this.viewAction = this.viewAction.bind(this);
+    this.viewDraft = this.viewDraft.bind(this);
+    this.handleSave = this.handleSave.bind(this); 
+    this.handleSubmit = this.handleSubmit.bind(this); 
   }
 
   viewAction(action){
@@ -33,6 +37,21 @@ class App extends Component {
       action: action,
       showActionModal: true
     });
+  }
+
+  viewDraft(incident){
+    this.setState({
+      incident: incident, 
+      showIncidentModal: true
+    })
+  }
+
+  handleSave(incident){
+    // console.log(incident)
+  }
+
+  handleSubmit(incident){
+    // console.log(incident)
   }
   
   componentWillMount(){
@@ -83,11 +102,12 @@ class App extends Component {
     return (
       <div className="App" >
         <NavBar 
-          onNewIncident={() => this.setState({showIncidentModal: true})} 
+          onNewIncident={() => this.setState({showIncidentModal: true, incident: {}})} 
           />
         <div className="Main" style={showIncidentModal || showActionModal ? overLay : null}>
-          <Drafts 
-            drafts={draftIncidents}
+          <LeftSideBar 
+            daySinceLastReport={daySinceLastReport}
+            openIncidentsReport={openIncidentsReport}
           />
 
           {/* <Modal>
@@ -103,7 +123,10 @@ class App extends Component {
                 name="incidentForm"
                 modalDimensions={incidentModalDimensions}
                 lookupData={lookupData}
+                draft={this.state.incident}
                 onClose={() => this.setState({showIncidentModal: false})}
+                onSaveDraft={this.handleSave}
+                onSubmit={this.handleSubmit}
                 >
               </IncidentForm>
             </Modal> : 
@@ -123,13 +146,17 @@ class App extends Component {
 
           <Dashboard 
             incidents={openIncidents}
-            daySinceLastReport={daySinceLastReport}
-            openIncidentsReport={openIncidentsReport}
             />
 
-          <Actions 
+          {/* <Actions 
             openIncidents={openIncidents}
             viewAction={this.viewAction}
+          /> */}
+          <RightSideBar 
+            openIncidents={openIncidents}
+            viewAction={this.viewAction}
+            draftIncidents={draftIncidents}
+            viewDraft={this.viewDraft}
           />
         </div>
         <Footer/>

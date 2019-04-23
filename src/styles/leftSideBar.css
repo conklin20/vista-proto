@@ -1,0 +1,44 @@
+/* h4, h5 {
+  padding-top: 10px; 
+  text-align: center; 
+} */
+
+.report-table {
+  background-color: #d3d3d3;
+  max-height: 35vh;
+  overflow-y: scroll;
+  border: 2px solid #2C3E50; 
+  border-radius: 10px;
+  /* width: 100%; */
+  /* margin: 0;
+  padding: 0; */
+}
+
+.table-row {
+  max-height: 10px;
+}
+
+/* .table:hover {
+	background: rgba(0, 0, 0, .02);
+	cursor: pointer;
+}
+
+.table:hover span{
+	opacity: 1;
+} */
+
+.report-table::-webkit-scrollbar {
+  width: 1em;
+}
+
+.report-table::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+
+.report-table::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
