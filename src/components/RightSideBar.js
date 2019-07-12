@@ -11,6 +11,7 @@ const defaultStyle = {
   borderLeft: '2px solid #2c3e50',
   backgroundColor: '#95a5a6',
   padding: '2vh'
+  ,height: '100%'
 }
 
 class RightSideBar extends Component {
@@ -22,7 +23,7 @@ class RightSideBar extends Component {
     
     return(
       <div style={defaultStyle}>
-        <h4>Action Dashboard</h4>
+        <h4><i class="fas fa-lock-open"></i>Action Dashboard</h4>
         <Actions 
           openIncidents={openIncidents}
           viewAction={viewAction}

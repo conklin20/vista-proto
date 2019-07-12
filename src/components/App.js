@@ -1,5 +1,6 @@
 import '../styles/app.css';
 import '../styles/flatly.min.css';
+import '../styles/sideBarMenu.css';
 import React, { Component } from 'react';
 import NavBar from './NavBar'
 import LeftSideBar from './LeftSideBar'
@@ -14,6 +15,10 @@ import Modal from './Modal'
 import Drafts from './Drafts';
 import RightSideBar from './RightSideBar';
 
+import SideBarMenu from '../components/SideBarMenu';
+import Sidebar from "react-sidebar";
+
+const mql = window.matchMedia(`(min-width: 800px)`);
 
 class App extends Component {
   constructor(props){
@@ -23,7 +28,9 @@ class App extends Component {
       showIncidentModal: false, 
       showActionModal: false, 
       incident: {}, 
-      action: {}
+      action: {}, 
+      
+      sidebarOpen: true
     };
     
     this.viewAction = this.viewAction.bind(this);
@@ -32,6 +39,8 @@ class App extends Component {
     this.handleSubmit = this.handleSubmit.bind(this); 
     this.onShowIncident = this.onShowIncident.bind(this); 
     this.onShowActions = this.onShowActions.bind(this);
+    
+    this.onSetSidebarOpen = this.onSetSidebarOpen.bind(this);
   }
 
   onShowIncident(incident){
@@ -66,6 +75,10 @@ class App extends Component {
   
   componentWillMount(){
     this.setState({staticData: staticData});
+  }
+
+  onSetSidebarOpen(open) {
+    this.setState({ sidebarOpen: open });
   }
 
   render() {
@@ -109,16 +122,68 @@ class App extends Component {
       filter:"blur(8px)",
     }
     
+    const sideBarstyles = {
+      root: {
+        position: "absolute",
+        top: '80px',
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflow: "hidden"
+      },
+      sidebar: {
+        zIndex: 2,
+        position: "absolute",
+        top: 0,
+        bottom: 0,
+        transition: "transform .3s ease-out",
+        WebkitTransition: "-webkit-transform .3s ease-out",
+        willChange: "transform",
+        overflowY: "auto"
+      },
+      content: {
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        overflowY: "auto",
+        WebkitOverflowScrolling: "touch",
+        transition: "left .3s ease-out, right .3s ease-out"
+      },
+      overlay: {
+        zIndex: 1,
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        opacity: 0,
+        visibility: "hidden",
+        transition: "opacity .3s ease-out, visibility .3s ease-out",
+        backgroundColor: "rgba(0,0,0,.3)"
+      },
+      dragHandle: {
+        zIndex: 1,
+        position: "fixed",
+        top: 0,
+        bottom: 0
+      }
+    };
+
     return (
       <div className="App" >
         <NavBar 
           onNewIncident={() => this.setState({showIncidentModal: true, incident: {}})} 
           />
         <div className="Main" style={showIncidentModal || showActionModal ? overLay : null}>
-          <LeftSideBar 
+          <SideBarMenu 
+            
+          />
+          {/* <LeftSideBar 
             daySinceLastReport={daySinceLastReport}
             openIncidentsReport={openIncidentsReport}
-          />
+          /> */}
 
           {/* <Modal>
             <ModalTemplate 
@@ -158,20 +223,58 @@ class App extends Component {
             incidents={openIncidents}
             onShowIncident={this.onShowIncident}
             onShowActions={this.onShowActions}
-            />
+          />
 
           {/* <Actions 
             openIncidents={openIncidents}
             viewAction={this.viewAction}
           /> */}
-          <RightSideBar 
+
+          {/* <RightSideBar 
             openIncidents={openIncidents}
             viewAction={this.viewAction}
             draftIncidents={draftIncidents}
             viewDraft={this.viewDraft}
-          />
+          /> */}
+{/*   
+          <Sidebar 
+            styles={sideBarstyles}
+            sidebar={<RightSideBar 
+              openIncidents={openIncidents}
+              viewAction={this.viewAction}
+              draftIncidents={draftIncidents}
+              viewDraft={this.viewDraft}
+            />}
+            open={this.state.sidebarOpen}
+            docked={this.state.sidebarDocked}
+            onSetOpen={this.onSetSidebarOpen}
+            pullRight={true}
+          >
+            <b>Main content</b>
+          </Sidebar> */}
+          <Sidebar
+            styles={sideBarstyles}
+            sidebar={
+              <RightSideBar 
+                openIncidents={openIncidents}
+                viewAction={this.viewAction}
+                draftIncidents={draftIncidents}
+                viewDraft={this.viewDraft}
+              />}
+            open={this.state.sidebarOpen}
+            onSetOpen={this.onSetSidebarOpen}
+            // styles={{ sidebar: { background: "white" } }}
+            pullRight={true}
+            // docked={true}
+            >
+            <div className="openSideBarDiv" onClick={() => this.onSetSidebarOpen(true)}>
+              <i class="far fa-calendar-check"></i>
+              View Actions, Approvals and Drafts
+              <i class="fas fa-chevron-left"></i>            
+            </div>
+          </Sidebar>
         </div>
-        <Footer/>
+        {/* <Footer/> */}
       </div>
     );
   }

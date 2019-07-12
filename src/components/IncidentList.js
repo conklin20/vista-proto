@@ -47,6 +47,7 @@ class IncidentList extends Component {
             name="searchInput"
             onChange={(e) => this.setState({[e.target.name]: e.target.value})}
           />
+          <i class="fas fa-filter"></i>
         </div>
         <div>
           <table style={tableStyle} className="table table-hover">
